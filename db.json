@@ -1,0 +1,76 @@
+{
+    "recipes": [
+        {
+            "_id": 1,
+            "url": "https://www.halfbakedharvest.com/spanakopita-melt/",
+            "name": "party size spanakopita melt",
+            "source": "HalfBakedHarvest",
+            "ingredients": [
+                "12-16 ounces fresh baby spinach",
+                "2 tablespoons extra virgin olive oil",
+                "1 small shallot, chopped",
+                "2 cloves garlic, finely chopped or grated",
+                "1/3 cup fresh basil, chopped (or 1 tablespoon dried)",
+                "1/3 cup fresh dill, chopped (or 1 tablespoon dried)",
+                "1/4 cup fresh oregano, chopped (or 2 teaspoons dried)",
+                "kosher salt and black pepper",
+                "1 pinch red pepper flakes",
+                "zest of 1 lemon",
+                "3/4 cup crumbled feta cheese",
+                "1 loaf ciabatta bread, halved lengthwise",
+                "6 slices provolone cheese",
+                "1/2 cup shredded mozzarella",
+                "2 tablespoons salted butter",
+                "1 tablespoon raw sesame seeds (optional)"
+            ]
+        },
+        {
+            "_id": 2,
+            "url": "https://www.halfbakedharvest.com/chipotle-chicken-and-avocado-rice-soup/",
+            "name": "slow cooker chipotle chicken and avocado rice soup",
+            "source": "HalfBakedHarvest",
+            "ingredients": [
+                "1 medium yellow onion, chopped",
+                "1-2 jalapeños, seeded if desired, and chopped",
+                "4 cloves garlic, finely chopped or grated",
+                "1 pound boneless skinless, chicken breasts",
+                "1 rounded tablespoon chipotle chili powder",
+                "2 teaspoons smoked paprika",
+                "2 teaspoons ground cumin",
+                "1/4 teaspoon ground cinnamon",
+                "kosher salt and black pepper",
+                "6 cups low sodium chicken broth",
+                "1 (14 ounce) can fire-roasted diced tomatoes",
+                "2 cups cooked white or brown rice",
+                "juice of 2 limes, plus more for serving",
+                "1/2 cup fresh cilantro, chopped, plus more for serving",
+                "2 avocados, chopped",
+                "crumbed feta cheese and tortilla chips, for serving"
+
+            ]
+        },
+        {
+            "_id": 3,
+            "url": "https://www.halfbakedharvest.com/buffalo-chicken-pizza/",
+            "name": "sheet pan buffalo chicken pizza",
+            "source": "HalfBakedHarvest",
+            "ingredients": [
+                "1/2 pound pizza dough, homemade or store-bought",
+                "1 cup cooked shredded chicken",
+                "1/2 cup buffalo sauce (homemade sauce in notes)",
+                "2 tablespoons chopped fresh chives",
+                "2 teaspoons dried parsley",
+                "1 teaspoon dried dill",
+                "1/2 cup fresh cilantro or parsley, chopped",
+                "1-2 cloves garlic, grated",
+                "1/2-1 teaspoon fennel seeds",
+                "1 pinch red pepper flakes",
+                "1/3 cup ranch dressing (homemade sauce in notes)",
+                "1/4 cup crumbled blue cheese (optional)",
+                "1 cup shredded whole milk mozzarella",
+                "1 cup shredded cheddar cheese",
+                "1/2 cup grated parmesan or asiago cheese"
+            ]
+        }
+    ]
+}

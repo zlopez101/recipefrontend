@@ -6,7 +6,12 @@
 
 <script>
 export default {
-  name: "signup"
+  name: "signup",
+  data() {
+    return {
+      user: {}
+    };
+  }
 };
 </script>
 
