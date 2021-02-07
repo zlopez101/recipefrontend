@@ -1,18 +1,24 @@
 <template>
   <div v-if="recipe">
     <h2>{{ recipe.name }}</h2>
-    <ul>
-      <li v-for="ingredient in recipe.ingredients" :key="ingredient">
-        {{ ingredient }}
-      </li>
-    </ul>
+    <v-chip-group column>
+      <baseIngredient
+        v-for="ingredient in recipe.ingredients"
+        :key="ingredient"
+        :ingredient="ingredient"
+      />
+    </v-chip-group>
   </div>
 </template>
 
 <script>
 import RecipeService from "../services/RecipeService.js";
+import baseIngredient from "@/components/baseIngredient.vue";
 export default {
   name: "recipeDetails",
+  components: {
+    baseIngredient
+  },
   props: ["id"],
   data() {
     return {
