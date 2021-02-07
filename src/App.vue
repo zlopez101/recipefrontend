@@ -2,9 +2,8 @@
   <v-app>
     <v-app-bar app color="primary-dark" dark>
       <div>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/recipes">Recipes</router-link>
+        <router-link to="/">Recipes</router-link> |
+        <router-link to="/about">About</router-link>
       </div>
       <v-spacer></v-spacer>
 
