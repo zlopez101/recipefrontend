@@ -1,6 +1,10 @@
 <template>
   <router-link :to="{ name: 'recipeDetails', params: { id: recipe.id } }">
-    <h2>{{ recipe.name }}</h2>
+    <v-card>
+      <v-card-title primary-title>
+        {{ recipe.name }}
+      </v-card-title>
+    </v-card>
   </router-link>
 </template>
 
