@@ -3,6 +3,7 @@
     <h2>{{ recipe.name }}</h2>
     <v-chip-group column>
       <baseIngredient
+        v-on:inactivate="onInactivate"
         v-for="ingredient in recipe.ingredients"
         :key="ingredient"
         :ingredient="ingredient"
@@ -22,25 +23,24 @@ export default {
     baseIngredient
   },
   props: ["id"],
-  // data() {
-  //   return {
-  //     recipe: null
-  //   };
-  // },
+  data() {
+    return {
+      vals: []
+    };
+  },
   created() {
     this.$store.dispatch("fetchRecipe", this.id);
-    //   RecipeService.getRecipe(this.id)
-    //     .then(response => {
-    //       this.recipe = response.data;
-    //     })
-    //     .catch(error => {
-    //       console.log(error);
-    //     });
   },
   computed: mapState(["recipe"]),
   methods: {
     addToGrocery() {
       this.$store.dispatch("addIngredients");
+    },
+    onInactivate(clicked, ingredient) {
+      this.$store.dispatch("inactivateIngredient", {
+        add: clicked,
+        inactive: ingredient
+      });
     }
   }
 };

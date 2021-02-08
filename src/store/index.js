@@ -8,8 +8,7 @@ export default new Vuex.Store({
   state: {
     recipes: [],
     recipe: {},
-    GroceryList: [],
-    FinalList: []
+    GroceryList: []
   },
   mutations: {
     SET_RECIPES(state, recipes) {
@@ -18,6 +17,16 @@ export default new Vuex.Store({
     SET_RECIPE(state, recipe) {
       state.recipe = recipe;
     },
+    INACTIVATE_INGREDIENT(state, inactiveIngredient) {
+      state.recipe.inactiveIngredients.push(inactiveIngredient);
+    },
+    REMOVE_INACTIVE_INGREDIENT(state, toBeRemoved) {
+      state.recipe.inactiveIngredients.splice(
+        state.recipe.inactiveIngredients.indexOf(toBeRemoved),
+        1
+      );
+    },
+    // adding a random ingredient to grocery store list
     ADD_INGREDIENT(state, ingredient) {
       state.GroceryList.push(ingredient);
     }
@@ -36,10 +45,15 @@ export default new Vuex.Store({
       var recipe = getters.getRecipeById(id);
 
       if (recipe) {
+        // add the inactivate ingredients property to the recipe object, not included in the backend api (changes every time)
+        recipe.inactiveIngredients = [];
         commit("SET_RECIPE", recipe);
       } else {
         RecipeService.getRecipe(id)
           .then(response => {
+            // add the inactivate ingredients property to the recipe object, not included in the backend api (changes every time)
+            var recipe = response.data;
+            recipe.inactiveIngredients = [];
             commit("SET_RECIPE", response.data);
           })
           .catch(error => {
@@ -49,6 +63,13 @@ export default new Vuex.Store({
     },
     addIngredients({ commit }, ingredients) {
       commit("ADD_INGREDIENT", ingredients);
+    },
+    inactivateIngredient({ commit }, { add, inactive }) {
+      if (add) {
+        commit("INACTIVATE_INGREDIENT", inactive);
+      } else {
+        commit("REMOVE_INACTIVE_INGREDIENT", inactive);
+      }
     }
   },
   getters: {
