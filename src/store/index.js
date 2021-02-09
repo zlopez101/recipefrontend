@@ -26,9 +26,12 @@ export default new Vuex.Store({
         1
       );
     },
-    // adding a random ingredient to grocery store list
-    ADD_INGREDIENT(state, ingredient) {
-      state.GroceryList.push(ingredient);
+    // adding all ingredients not inactivated to grocery store list
+    ADD_INGREDIENTS(state, ingredients) {
+      state.GroceryList.push(...ingredients);
+    },
+    CREATE_GROCERY_LIST(state, groceryItems) {
+      state.GroceryList = groceryItems;
     }
   },
   actions: {
@@ -62,7 +65,7 @@ export default new Vuex.Store({
       }
     },
     addIngredients({ commit }, ingredients) {
-      commit("ADD_INGREDIENT", ingredients);
+      commit("ADD_INGREDIENTS", ingredients);
     },
     inactivateIngredient({ commit }, { add, inactive }) {
       if (add) {
@@ -70,6 +73,15 @@ export default new Vuex.Store({
       } else {
         commit("REMOVE_INACTIVE_INGREDIENT", inactive);
       }
+    },
+    makeTheList({ commit, state }) {
+      RecipeService.makeList(state.GroceryList)
+        .then(response => {
+          commit("CREATE_GROCERY_LIST", response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   getters: {

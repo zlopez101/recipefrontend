@@ -9,7 +9,9 @@
         :ingredient="ingredient"
       />
     </v-chip-group>
-    <v-btn @submit="addToGrocery" color="success">Add to Grocery List</v-btn>
+    <v-btn @click="addToGrocery" outlined color="primary" dark
+      >Add to Grocery List</v-btn
+    >
   </div>
 </template>
 
@@ -34,13 +36,18 @@ export default {
   computed: mapState(["recipe"]),
   methods: {
     addToGrocery() {
-      this.$store.dispatch("addIngredients");
+      this.$store.dispatch("addIngredients", this.exportIngredients());
     },
     onInactivate(clicked, ingredient) {
       this.$store.dispatch("inactivateIngredient", {
         add: clicked,
         inactive: ingredient
       });
+    },
+    exportIngredients() {
+      return this.recipe.ingredients.filter(
+        ingredient => !this.recipe.inactiveIngredients.includes(ingredient)
+      );
     }
   }
 };

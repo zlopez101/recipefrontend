@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://my-json-server.typicode.com/zlopez101/json-server",
+  // baseURL: "https://my-json-server.typicode.com/zlopez101/json-server",
+  baseURL: "http://127.0.0.1:5000/",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -16,5 +17,8 @@ export default {
 
   getRecipe(id) {
     return apiClient.get("/recipes/" + id);
+  },
+  makeList(ingredients) {
+    return apiClient.post("/groceryList", { ingredients: ingredients });
   }
 };
