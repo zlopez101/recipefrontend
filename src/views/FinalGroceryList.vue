@@ -1,0 +1,19 @@
+<template>
+  <div>
+    <GroceryList />
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+import GroceryList from "@/components/GroceryList.vue";
+export default {
+  name: "FinalGroceryList",
+  components: {
+    GroceryList
+  },
+  computed: mapState(["groceryList"])
+};
+</script>
+
+<style></style>

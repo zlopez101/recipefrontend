@@ -1,5 +1,7 @@
 <template>
-  <v-chip @click="change" outlined :color="myColor">{{ myIngredient }}</v-chip>
+  <v-chip @click="change" outlined :color="myColor">{{
+    myIngredient.ingredient
+  }}</v-chip>
 </template>
 
 <script>
@@ -13,7 +15,7 @@ export default {
   },
   props: {
     ingredient: {
-      type: String
+      type: Object
     }
   },
   computed: {

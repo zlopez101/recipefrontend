@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     recipes: [],
     recipe: {},
-    GroceryList: []
+    groceryList: []
   },
   mutations: {
     SET_RECIPES(state, recipes) {
@@ -28,10 +28,10 @@ export default new Vuex.Store({
     },
     // adding all ingredients not inactivated to grocery store list
     ADD_INGREDIENTS(state, ingredients) {
-      state.GroceryList.push(...ingredients);
+      state.groceryList.push(...ingredients);
     },
     CREATE_GROCERY_LIST(state, groceryItems) {
-      state.GroceryList = groceryItems;
+      state.groceryList = groceryItems;
     }
   },
   actions: {
@@ -64,8 +64,16 @@ export default new Vuex.Store({
           });
       }
     },
-    addIngredients({ commit }, ingredients) {
-      commit("ADD_INGREDIENTS", ingredients);
+    addIngredients({ commit }, { ingredients, recipeName }) {
+      let labeledIngredients = [];
+      const len = ingredients.length;
+      for (var i = 0; i < len; i++) {
+        labeledIngredients.push({
+          ingredient: ingredients[i],
+          from: recipeName
+        });
+      }
+      commit("ADD_INGREDIENTS", labeledIngredients);
     },
     inactivateIngredient({ commit }, { add, inactive }) {
       if (add) {
@@ -75,7 +83,7 @@ export default new Vuex.Store({
       }
     },
     makeTheList({ commit, state }) {
-      RecipeService.makeList(state.GroceryList)
+      RecipeService.makeList(state.groceryList)
         .then(response => {
           commit("CREATE_GROCERY_LIST", response.data);
         })

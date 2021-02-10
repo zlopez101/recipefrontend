@@ -16,7 +16,7 @@ export default {
   },
 
   getRecipe(id) {
-    return apiClient.get("/recipes/" + id);
+    return apiClient.get("/recipe/" + id);
   },
   makeList(ingredients) {
     return apiClient.post("/groceryList", { ingredients: ingredients });

@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import RecipeList from "../views/RecipeList.vue";
+import FinalGroceryList from "../views/FinalGroceryList.vue";
+import PreviewGrocery from "@/views/PreviewGrocery.vue";
 import recipeDetails from "../components/recipeDetails.vue";
 
 Vue.use(VueRouter);
@@ -25,6 +27,16 @@ const routes = [
     name: "recipeDetails",
     component: recipeDetails,
     props: true
+  },
+  {
+    path: "/preview",
+    name: "PreviewGrocery",
+    component: PreviewGrocery
+  },
+  {
+    path: "/grocery_list",
+    name: "GroceryList",
+    component: FinalGroceryList
   }
 ];
 

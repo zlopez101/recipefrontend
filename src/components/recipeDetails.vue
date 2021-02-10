@@ -6,7 +6,7 @@
         v-on:inactivate="onInactivate"
         v-for="ingredient in recipe.ingredients"
         :key="ingredient"
-        :ingredient="ingredient"
+        :ingredient="{ ingredient: ingredient, from: recipe.name }"
       />
     </v-chip-group>
     <v-btn @click="addToGrocery" outlined color="primary" dark
@@ -36,7 +36,10 @@ export default {
   computed: mapState(["recipe"]),
   methods: {
     addToGrocery() {
-      this.$store.dispatch("addIngredients", this.exportIngredients());
+      this.$store.dispatch("addIngredients", {
+        ingredients: this.exportIngredients(),
+        recipeName: this.recipe.name
+      });
     },
     onInactivate(clicked, ingredient) {
       this.$store.dispatch("inactivateIngredient", {
