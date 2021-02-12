@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>{{ title }}</h2>
     <v-chip-group column>
       <baseIngredient
         v-on:inactivate="onInactivate"
@@ -27,6 +28,10 @@ export default {
   props: {
     groceries: {
       type: Array
+    },
+    title: {
+      type: String,
+      default: "Grocery List"
     }
   },
   methods: {

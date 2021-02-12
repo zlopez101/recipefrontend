@@ -1,6 +1,11 @@
 <template>
   <div>
-    <GroceryList />
+    <GroceryList
+      v-for="label in Object.keys(this.finalList)"
+      :key="label"
+      :title="label"
+      :groceries="finalList[label]"
+    />
   </div>
 </template>
 
@@ -12,7 +17,7 @@ export default {
   components: {
     GroceryList
   },
-  computed: mapState(["groceryList"])
+  computed: mapState(["finalList"])
 };
 </script>
 

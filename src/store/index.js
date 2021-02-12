@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     recipes: [],
     recipe: {},
-    groceryList: []
+    groceryList: [],
+    finalList: {}
   },
   mutations: {
     SET_RECIPES(state, recipes) {
@@ -31,7 +32,7 @@ export default new Vuex.Store({
       state.groceryList.push(...ingredients);
     },
     CREATE_GROCERY_LIST(state, groceryItems) {
-      state.groceryList = groceryItems;
+      state.finalList = groceryItems;
     }
   },
   actions: {
@@ -64,16 +65,20 @@ export default new Vuex.Store({
           });
       }
     },
-    addIngredients({ commit }, { ingredients, recipeName }) {
-      let labeledIngredients = [];
-      const len = ingredients.length;
-      for (var i = 0; i < len; i++) {
-        labeledIngredients.push({
-          ingredient: ingredients[i],
-          from: recipeName
-        });
+    addIngredients({ commit, getters }, { ingredients, recipeName }) {
+      if (getters.getRecipeNamesAlreadyInGroceryList.has(recipeName)) {
+        console.log("You can't add that dummy!");
+      } else {
+        let labeledIngredients = [];
+        const len = ingredients.length;
+        for (var i = 0; i < len; i++) {
+          labeledIngredients.push({
+            ingredient: ingredients[i],
+            from: recipeName
+          });
+        }
+        commit("ADD_INGREDIENTS", labeledIngredients);
       }
-      commit("ADD_INGREDIENTS", labeledIngredients);
     },
     inactivateIngredient({ commit }, { add, inactive }) {
       if (add) {
@@ -82,8 +87,8 @@ export default new Vuex.Store({
         commit("REMOVE_INACTIVE_INGREDIENT", inactive);
       }
     },
-    makeTheList({ commit, state }) {
-      RecipeService.makeList(state.groceryList)
+    makeTheList({ commit }, ingredients) {
+      RecipeService.makeList(ingredients)
         .then(response => {
           commit("CREATE_GROCERY_LIST", response.data);
         })
@@ -95,6 +100,13 @@ export default new Vuex.Store({
   getters: {
     getRecipeById: state => id => {
       return state.recipes.find(recipe => recipe.id == id);
+    },
+    getRecipeNamesAlreadyInGroceryList: state => {
+      var mySet = new Set();
+      for (var i = 0; i < state.groceryList.length; i++) {
+        mySet.add(state.groceryList[i].from);
+      }
+      return mySet;
     }
   },
   modules: {}

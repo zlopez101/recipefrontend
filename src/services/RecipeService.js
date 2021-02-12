@@ -2,7 +2,9 @@ import axios from "axios";
 
 const apiClient = axios.create({
   // baseURL: "https://my-json-server.typicode.com/zlopez101/json-server",
-  baseURL: "http://127.0.0.1:5000/",
+  // baseURL: "https://recipenow.azurewebsites.net/api",
+  // baseURL: "http://localhost:5000/api",
+  baseURL: "https://stark-oasis-48982.herokuapp.com/api",
   withCredentials: false,
   headers: {
     Accept: "application/json",

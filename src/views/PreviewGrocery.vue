@@ -1,13 +1,17 @@
 <template>
   <div>
+    <v-toolbar dense floating>
+      <v-text-field label="New Grocery Item" single-line></v-text-field>
+    </v-toolbar>
     <GroceryList v-on:onInactivate="onInactivate" :groceries="groceryList" />
     <v-btn @click="makeFinalList" color="warning">Sort</v-btn>
+    <v-spacer></v-spacer>
+    <v-btn>Add an ingredient</v-btn>
   </div>
 </template>
 
 <script>
 import GroceryList from "@/components/GroceryList.vue";
-// import router from "../router/index.js";
 import { mapState } from "vuex";
 export default {
   name: "PreviewGrocery",
@@ -23,9 +27,10 @@ export default {
   methods: {
     makeFinalList() {
       // dispatch the api call from the vuex store tbd
-      console.log("making the final list");
-      //   this.$store.dispatch("makeTheList");
-      //   router.push({ name: "GroceryList" });
+      // console.log(this.exportIngredients());
+      this.$store.dispatch("makeTheList", this.exportIngredients());
+      console.log("made the final list");
+      this.$router.push({ name: "GroceryList" });
     },
     onInactivate(clicked, ingredient) {
       if (clicked) {
@@ -36,6 +41,11 @@ export default {
           1
         );
       }
+    },
+    exportIngredients() {
+      return this.groceryList.filter(
+        ingredient => !this.myInactivations.includes(ingredient)
+      );
     }
   }
 };
