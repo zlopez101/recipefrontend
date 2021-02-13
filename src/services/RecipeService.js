@@ -1,8 +1,6 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  // baseURL: "https://my-json-server.typicode.com/zlopez101/json-server",
-  // baseURL: "https://recipenow.azurewebsites.net/api",
   // baseURL: "http://localhost:5000/api",
   baseURL: "https://stark-oasis-48982.herokuapp.com/api",
   withCredentials: false,
@@ -19,6 +17,9 @@ export default {
 
   getRecipe(id) {
     return apiClient.get("/recipe/" + id);
+  },
+  makeRecipe(url) {
+    return apiClient.post("/recipes", { url: url });
   },
   makeList(ingredients) {
     return apiClient.post("/groceryList", { ingredients: ingredients });

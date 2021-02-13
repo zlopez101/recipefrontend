@@ -45,6 +45,16 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+    makeRecipe({ dispatch }, url) {
+      RecipeService.makeRecipe(url)
+        .then(response => {
+          console.log("recipe was created!", response);
+        })
+        .catch(error => {
+          console.log("recipe was not added: ", error);
+        });
+      dispatch("fetchRecipes");
+    },
     fetchRecipe({ commit, getters }, id) {
       var recipe = getters.getRecipeById(id);
 
