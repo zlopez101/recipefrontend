@@ -6,8 +6,8 @@ import PreviewGrocery from "@/views/PreviewGrocery.vue";
 import Account from "@/views/Account.vue";
 import Settings from "@/views/Settings.vue";
 import RegisterUser from "@/views/RegisterUser.vue";
-import recipeDetails from "../components/recipeDetails.vue";
-
+import recipeDetails from "@/components/recipeDetails.vue";
+import loginUser from "@/components/loginUser.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -44,8 +44,13 @@ const routes = [
   },
   {
     path: "/register",
-    name: "RegisterUser",
+    name: "register",
     component: RegisterUser
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: loginUser
   }
 ];
 

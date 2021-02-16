@@ -1,17 +1,22 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import RecipeService from "@/services/RecipeService.js";
-
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    token: null,
     recipes: [],
     recipe: {},
     groceryList: [],
     finalList: {}
   },
   mutations: {
+    SET_TOKEN(state, token) {
+      state.user = token;
+      localStorage.setItem("user", JSON.stringify(token));
+      RecipeService.setToken(token);
+    },
     SET_RECIPES(state, recipes) {
       state.recipes = recipes;
     },
@@ -36,6 +41,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    register({ commit }, userData) {
+      RecipeService.register(userData).then(response => {
+        commit("SET_TOKEN", response.data);
+      });
+    },
+    login({ commit }, userData) {
+      RecipeService.login(userData).then(response => {
+        commit("SET_TOKEN", response.data);
+      });
+    },
+    logout({ commit }) {
+      RecipeService.logout().then(() => {
+        commit("SET_TOKEN", null);
+      });
+    },
     fetchRecipes({ commit }) {
       RecipeService.getRecipes()
         .then(response => {
