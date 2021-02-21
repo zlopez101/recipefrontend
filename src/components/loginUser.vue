@@ -35,10 +35,12 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch("login", {
-        email: this.email,
-        password: this.password
-      });
+      this.$store
+        .dispatch("login", {
+          email: this.email,
+          password: this.password
+        })
+        .then(() => this.$router.push("/recipes"));
     }
   }
 };

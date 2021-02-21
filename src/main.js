@@ -12,7 +12,7 @@ new Vue({
   router,
   store,
   vuetify,
-  created() {
+  beforeCreate() {
     const userToken = localStorage.getItem("user");
     if (userToken) {
       const token = JSON.parse(userToken);

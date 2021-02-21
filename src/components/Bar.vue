@@ -3,42 +3,36 @@
     <v-app-bar app color="indigo accent-3" dark dense>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-toolbar-title>Recipes Now</v-toolbar-title>
-      <!-- <router-link to="/">Recipes</router-link>
       <v-spacer></v-spacer>
-      <router-link to="/preview">Grocery List</router-link> -->
-      <v-spacer></v-spacer>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" icon>
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-        </template>
-        Add a recipe
-      </v-tooltip>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" icon>
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-        </template>
-        Search for a recipe
-      </v-tooltip>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" icon>
-            <v-icon>mdi-format-list-checkbox</v-icon>
-          </v-btn>
-        </template>
-        Grocery List
-      </v-tooltip>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn v-bind="attrs" v-on="on" icon>
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-        Logout
-      </v-tooltip>
+      <div v-if="user">
+        <base-button
+          :icon="buttons[0].icon"
+          :toolTipText="buttons[0].tooltiptext"
+          v-on:updated="dialog = !dialog"
+        />
+        <base-button
+          :icon="buttons[1].icon"
+          :toolTipText="buttons[1].tooltiptext"
+          v-on:updated="search"
+        />
+        <base-button
+          :icon="buttons[2].icon"
+          :toolTipText="buttons[2].tooltiptext"
+          v-on:updated="grocery"
+        />
+        <base-button
+          :icon="buttons[3].icon"
+          :toolTipText="buttons[3].tooltiptext"
+          v-on:updated="logout"
+        />
+      </div>
+      <div v-else>
+        <base-button
+          :icon="buttons[4].icon"
+          :toolTipText="buttons[4].tooltiptext"
+          v-on:updated="login"
+        />
+      </div>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
@@ -94,7 +88,11 @@
 </template>
 
 <script>
+import baseButton from "@/components/baseButton.vue";
 export default {
+  components: {
+    baseButton
+  },
   props: {
     user: {
       type: String,
@@ -107,12 +105,51 @@ export default {
       group: null,
       dialog: false,
       recipeName: "",
-      recipeUrl: ""
+      recipeUrl: "",
+      buttons: [
+        {
+          icon: "mdi-plus",
+          tooltiptext: "Add a recipe",
+          method: "addRecipe"
+        },
+        {
+          icon: "mdi-magnify",
+          tooltiptext: "Search for a recipe",
+          method: "search"
+        },
+        {
+          icon: "mdi-format-list-checkbox",
+          tooltiptext: "Grocery List",
+          method: "grocery"
+        },
+        {
+          icon: "mdi-account-arrow-right",
+          tooltiptext: "Logout",
+          method: "logout"
+        },
+        {
+          icon: "mdi-login",
+          tooltiptext: "login",
+          method: ""
+        }
+      ]
     };
   },
   methods: {
     addRecipe() {
       this.$store.dispatch("makeRecipe", this.recipeUrl);
+    },
+    logout() {
+      this.$store.dispatch("logout");
+    },
+    search() {
+      console.log("Searching...");
+    },
+    grocery() {
+      console.log("To Grocery...");
+    },
+    login() {
+      this.$router.push({ name: "login" });
     }
   }
 };

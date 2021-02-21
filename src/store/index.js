@@ -13,9 +13,13 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_TOKEN(state, token) {
-      state.user = token;
+      state.token = token;
       localStorage.setItem("user", JSON.stringify(token));
       RecipeService.setToken(token);
+    },
+    REMOVE_TOKEN() {
+      localStorage.removeItem("user");
+      location.reload();
     },
     SET_RECIPES(state, recipes) {
       state.recipes = recipes;
@@ -47,13 +51,13 @@ export default new Vuex.Store({
       });
     },
     login({ commit }, userData) {
-      RecipeService.login(userData).then(response => {
+      return RecipeService.login(userData).then(response => {
         commit("SET_TOKEN", response.data);
       });
     },
     logout({ commit }) {
       RecipeService.logout().then(() => {
-        commit("SET_TOKEN", null);
+        commit("REMOVE_TOKEN");
       });
     },
     fetchRecipes({ commit }) {

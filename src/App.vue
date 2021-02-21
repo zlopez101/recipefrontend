@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Bar :user="user" />
+    <Bar :user="this.token" />
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -14,7 +14,7 @@ export default {
   components: {
     Bar
   },
-  computed: mapState(["user"])
+  computed: mapState(["token"])
 };
 </script>
 

@@ -6,41 +6,17 @@ import PreviewGrocery from "@/views/PreviewGrocery.vue";
 import Account from "@/views/Account.vue";
 import Settings from "@/views/Settings.vue";
 import RegisterUser from "@/views/RegisterUser.vue";
+import RecipeHome from "@/views/RecipeHome.vue";
 import recipeDetails from "@/components/recipeDetails.vue";
 import loginUser from "@/components/loginUser.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "RecipeList",
-    component: RecipeList
-  },
-  {
-    path: "/recipe/:id",
-    name: "recipeDetails",
-    component: recipeDetails,
-    props: true
-  },
-  {
-    path: "/preview",
-    name: "PreviewGrocery",
-    component: PreviewGrocery
-  },
-  {
-    path: "/grocery_list",
-    name: "GroceryList",
-    component: FinalGroceryList
-  },
-  {
-    path: "/account",
-    name: "Account",
-    component: Account
-  },
-  {
-    path: "/settings",
-    name: "Settings",
-    component: Settings
+    name: "Home",
+    component: RecipeHome
   },
   {
     path: "/register",
@@ -51,6 +27,43 @@ const routes = [
     path: "/login",
     name: "login",
     component: loginUser
+  },
+  {
+    path: "/recipes",
+    name: "RecipeList",
+    component: RecipeList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/recipe/:id",
+    name: "recipeDetails",
+    component: recipeDetails,
+    props: true,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/preview",
+    name: "PreviewGrocery",
+    component: PreviewGrocery,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/grocery_list",
+    name: "GroceryList",
+    component: FinalGroceryList,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: Account,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: Settings,
+    meta: { requiresAuth: true }
   }
 ];
 
@@ -58,6 +71,13 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((routeTo, routeFrom, next) => {
+  const loggedIn = localStorage.getItem("user");
+  if (routeTo.matched.some(record => record.meta.requiresAuth) && !loggedIn) {
+    next("/");
+  } else next();
 });
 
 export default router;
