@@ -12,5 +12,12 @@ new Vue({
   router,
   store,
   vuetify,
+  created() {
+    const userToken = localStorage.getItem("user");
+    if (userToken) {
+      const token = JSON.parse(userToken);
+      this.$store.commit("SET_TOKEN", token);
+    }
+  },
   render: h => h(App)
 }).$mount("#app");
