@@ -12,6 +12,7 @@ export default new Vuex.Store({
     finalList: {}
   },
   mutations: {
+    // user actions
     SET_TOKEN(state, token) {
       state.token = token;
       localStorage.setItem("user", JSON.stringify(token));
@@ -21,12 +22,18 @@ export default new Vuex.Store({
       localStorage.removeItem("user");
       location.reload();
     },
+    // recipe actions
+    // need the set recipe for a reload on a specific recipe page
     SET_RECIPES(state, recipes) {
       state.recipes = recipes;
     },
     SET_RECIPE(state, recipe) {
       state.recipe = recipe;
     },
+    // sometimes the user already has the ingredient at home
+    // need a way to inactivate that ingredient. also user could accidently
+    // inactivate ingredient, need a way to remove that ingredient
+    // right now we are storing the inactive ingredients on the recipe object
     INACTIVATE_INGREDIENT(state, inactiveIngredient) {
       state.recipe.inactiveIngredients.push(inactiveIngredient);
     },
