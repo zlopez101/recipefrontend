@@ -14,12 +14,15 @@ export default {
   components: {
     Bar
   },
-  computed: mapState(["token"])
+  computed: mapState({
+    token: state => state.user.token
+  })
 };
 </script>
 
 <style>
 a {
   text-decoration: none;
+  color: snow;
 }
 </style>

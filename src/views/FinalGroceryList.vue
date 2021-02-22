@@ -1,10 +1,10 @@
 <template>
   <div>
     <GroceryList
-      v-for="label in Object.keys(this.finalList)"
+      v-for="label in Object.keys(this.list)"
       :key="label"
       :title="label"
-      :groceries="finalList[label]"
+      :groceries="list[label]"
     />
   </div>
 </template>
@@ -17,7 +17,9 @@ export default {
   components: {
     GroceryList
   },
-  computed: mapState(["finalList"])
+  computed: mapState({
+    list: state => state.groceries.list
+  })
 };
 </script>
 

@@ -1,9 +1,20 @@
 <template>
   <div>
     <v-toolbar dense floating>
-      <v-text-field label="New Grocery Item" single-line></v-text-field>
+      <v-text-field
+        @keyup.enter="manuallyAddIngredient"
+        label="New Grocery Item"
+        v-model="addingThisIngredient"
+        single-line
+      ></v-text-field>
     </v-toolbar>
-    <GroceryList v-on:onInactivate="onInactivate" :groceries="groceryList" />
+    <GroceryList
+      v-on:onInactivate="onInactivate"
+      v-for="label in Object.keys(this.list)"
+      :key="label"
+      :title="label"
+      :groceries="list[label]"
+    />
     <v-btn @click="makeFinalList" color="warning">Sort</v-btn>
     <v-spacer></v-spacer>
     <v-btn>Add an ingredient</v-btn>
@@ -20,17 +31,17 @@ export default {
   },
   data() {
     return {
+      addingThisIngredient: "",
       myInactivations: []
     };
   },
-  computed: mapState(["groceryList"]),
+  computed: mapState({
+    list: state => state.groceries.list
+  }),
   methods: {
     makeFinalList() {
       // dispatch the api call from the vuex store tbd
-      // console.log(this.exportIngredients());
       this.$store.dispatch("makeTheList", this.exportIngredients());
-      console.log("made the final list");
-      this.$router.push({ name: "GroceryList" });
     },
     onInactivate(clicked, ingredient) {
       if (clicked) {
@@ -43,9 +54,13 @@ export default {
       }
     },
     exportIngredients() {
-      return this.groceryList.filter(
+      return this.list.Groceries.filter(
         ingredient => !this.myInactivations.includes(ingredient)
       );
+    },
+    manuallyAddIngredient() {
+      this.$store.dispatch("pushIngredients", [this.addingThisIngredient]);
+      this.addingThisIngredient = "";
     }
   }
 };

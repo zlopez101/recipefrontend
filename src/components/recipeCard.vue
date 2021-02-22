@@ -17,10 +17,7 @@ export default {
   },
   methods: {
     addToGrocery() {
-      this.$store.dispatch("addIngredients", {
-        ingredients: this.recipe.ingredients,
-        recipeName: this.recipe.name
-      });
+      this.$store.dispatch("pushIngredients", this.recipe.ingredients);
     }
   }
 };

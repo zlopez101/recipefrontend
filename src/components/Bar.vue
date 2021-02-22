@@ -2,7 +2,9 @@
   <div>
     <v-app-bar app color="indigo accent-3" dark dense>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-      <v-toolbar-title>Recipes Now</v-toolbar-title>
+      <router-link to="/recipes">
+        <v-toolbar-title>Recipes</v-toolbar-title>
+      </router-link>
       <v-spacer></v-spacer>
       <div v-if="user">
         <base-button
@@ -146,7 +148,7 @@ export default {
       console.log("Searching...");
     },
     grocery() {
-      console.log("To Grocery...");
+      this.$router.push({ name: "PreviewGrocery" });
     },
     login() {
       this.$router.push({ name: "login" });

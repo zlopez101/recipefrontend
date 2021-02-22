@@ -1,12 +1,12 @@
 <template>
-  <div v-if="recipe">
-    <h2>{{ recipe.name }}</h2>
+  <div v-if="local">
+    <h2>{{ local.name }}</h2>
     <v-chip-group column>
       <baseIngredient
         v-on:inactivate="onInactivate"
-        v-for="ingredient in recipe.ingredients"
-        :key="ingredient"
-        :ingredient="{ ingredient: ingredient, from: recipe.name }"
+        v-for="(ingredient, index) in local.ingredients"
+        :key="index"
+        :ingredient="{ ingredient: ingredient, id: index }"
       />
     </v-chip-group>
     <v-btn @click="addToGrocery" outlined color="primary" dark
@@ -18,7 +18,7 @@
 <script>
 // import RecipeService from "../services/RecipeService.js";
 import baseIngredient from "@/components/baseIngredient.vue";
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 export default {
   name: "recipeDetails",
   components: {
@@ -27,30 +27,42 @@ export default {
   props: ["id"],
   data() {
     return {
-      vals: []
+      inactiveIngredients: []
     };
   },
-  created() {
-    this.$store.dispatch("fetchRecipe", this.id);
+  computed: {
+    ...mapState({
+      _recipes: state => state.recipe.recipes
+    }),
+    ...mapGetters(["RecipeById"]),
+    local() {
+      return this.RecipeById(this.id);
+    }
   },
-  computed: mapState(["recipe"]),
+  created() {
+    if (this._recipes.length == 0) {
+      this.$store.dispatch("fetchRecipes");
+    }
+  },
   methods: {
     addToGrocery() {
-      this.$store.dispatch("addIngredients", {
-        ingredients: this.exportIngredients(),
-        recipeName: this.recipe.name
-      });
+      this.$store.dispatch("pushIngredients", this.exportIngredients());
     },
     onInactivate(clicked, ingredient) {
-      this.$store.dispatch("inactivateIngredient", {
-        add: clicked,
-        inactive: ingredient
-      });
+      // add the clicked ingredient to the inactive list
+      if (clicked) {
+        this.inactiveIngredients.push(ingredient.id);
+      } else {
+        this.inactiveIngredients = this.inactiveIngredients.filter(
+          arrayIngredient => arrayIngredient !== ingredient.id
+        );
+      }
     },
     exportIngredients() {
-      return this.recipe.ingredients.filter(
-        ingredient => !this.recipe.inactiveIngredients.includes(ingredient)
-      );
+      // filter ingredients based on locally inactivated
+      return this.local.ingredients.filter((ingredient, index) => {
+        return !this.inactiveIngredients.includes(index);
+      });
     }
   }
 };

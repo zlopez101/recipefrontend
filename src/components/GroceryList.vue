@@ -4,9 +4,9 @@
     <v-chip-group column>
       <baseIngredient
         v-on:inactivate="onInactivate"
-        v-for="item in groceries"
-        :key="item.from + item.ingredient"
-        :ingredient="item"
+        v-for="(ingredient, index) in groceries"
+        :key="ingredient + index"
+        :ingredient="{ ingredient: ingredient, id: index }"
       />
     </v-chip-group>
   </div>

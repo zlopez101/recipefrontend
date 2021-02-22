@@ -7,7 +7,7 @@
         </v-col>
       </v-row>
       <v-spacer></v-spacer>
-      <v-row v-for="recipe in recipes" :key="recipe.id">
+      <v-row v-for="recipe in recipe.recipes" :key="recipe.id">
         <v-col>
           <recipeCard :recipe="recipe" />
         </v-col>
@@ -25,9 +25,11 @@ export default {
     recipeCard
   },
   created() {
-    this.$store.dispatch("fetchRecipes");
+    if (this.recipe.recipes == 0) {
+      this.$store.dispatch("fetchRecipes");
+    }
   },
-  computed: mapState(["recipes"])
+  computed: mapState(["recipe"])
 };
 </script>
 
