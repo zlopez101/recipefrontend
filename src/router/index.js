@@ -1,14 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import RecipeList from "@/views/RecipeList.vue";
-import FinalGroceryList from "@/views/FinalGroceryList.vue";
-import PreviewGrocery from "@/views/PreviewGrocery.vue";
+// user views
 import Account from "@/views/Account.vue";
 import Settings from "@/views/Settings.vue";
 import RegisterUser from "@/views/RegisterUser.vue";
+import loginUser from "@/views/loginUser.vue";
 import RecipeHome from "@/views/RecipeHome.vue";
-import recipeDetails from "@/components/recipeDetails.vue";
-import loginUser from "@/components/loginUser.vue";
+// recipe views
+import RecipeList from "@/views/RecipeList.vue";
+import FinalGroceryList from "@/views/FinalGroceryList.vue";
+import PreviewGrocery from "@/views/PreviewGrocery.vue";
+import recipeDetails from "@/views/recipeDetails.vue";
 
 Vue.use(VueRouter);
 
@@ -49,7 +51,7 @@ const routes = [
   },
   {
     path: "/grocery_list",
-    name: "GroceryList",
+    name: "ingredientList",
     component: FinalGroceryList,
     meta: { requiresAuth: true }
   },

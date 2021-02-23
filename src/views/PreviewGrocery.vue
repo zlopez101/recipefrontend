@@ -4,12 +4,11 @@
       <v-text-field
         @keyup.enter="manuallyAddIngredient"
         label="New Grocery Item"
-        v-model="addingThisIngredient"
+        v-model="addingThisIngredient.ingredient"
         single-line
       ></v-text-field>
     </v-toolbar>
-    <GroceryList
-      v-on:onInactivate="onInactivate"
+    <ingredientList
       v-for="label in Object.keys(this.list)"
       :key="label"
       :title="label"
@@ -22,16 +21,22 @@
 </template>
 
 <script>
-import GroceryList from "@/components/GroceryList.vue";
+let id = 1;
+import ingredientList from "@/components/ingredientList.vue";
 import { mapState } from "vuex";
 export default {
   name: "PreviewGrocery",
   components: {
-    GroceryList
+    ingredientList
   },
   data() {
     return {
-      addingThisIngredient: "",
+      addingThisIngredient: {
+        ingredient: "",
+        active: true,
+        from: "UserCreated",
+        id: id++
+      },
       myInactivations: []
     };
   },
@@ -43,16 +48,6 @@ export default {
       // dispatch the api call from the vuex store tbd
       this.$store.dispatch("makeTheList", this.exportIngredients());
     },
-    onInactivate(clicked, ingredient) {
-      if (clicked) {
-        this.myInactivations.push(ingredient);
-      } else {
-        this.myInactivations.splice(
-          this.myInactivations.indexOf(ingredient),
-          1
-        );
-      }
-    },
     exportIngredients() {
       return this.list.Groceries.filter(
         ingredient => !this.myInactivations.includes(ingredient)
@@ -60,7 +55,16 @@ export default {
     },
     manuallyAddIngredient() {
       this.$store.dispatch("pushIngredients", [this.addingThisIngredient]);
-      this.addingThisIngredient = "";
+      // need to reset the ingredient, otherwise the store contains a reference to it
+      this.resetManualIngredient();
+    },
+    resetManualIngredient() {
+      this.addingThisIngredient = {
+        ingredient: "",
+        active: true,
+        from: "UserCreated",
+        id: id++
+      };
     }
   }
 };

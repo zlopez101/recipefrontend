@@ -6,7 +6,7 @@
       </v-card-title>
     </router-link>
     <v-spacer></v-spacer>
-    <v-btn @click="addToGrocery" color="success">Add to List</v-btn>
+    <v-btn @click="addToGrocery" color="success">Add t</v-btn>
   </v-card>
 </template>
 

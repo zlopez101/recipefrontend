@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GroceryList
+    <ingredientList
       v-for="label in Object.keys(this.list)"
       :key="label"
       :title="label"
@@ -11,11 +11,11 @@
 
 <script>
 import { mapState } from "vuex";
-import GroceryList from "@/components/GroceryList.vue";
+import ingredientList from "@/components/ingredientList.vue";
 export default {
   name: "FinalGroceryList",
   components: {
-    GroceryList
+    ingredientList
   },
   computed: mapState({
     list: state => state.groceries.list

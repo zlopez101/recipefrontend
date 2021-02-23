@@ -3,10 +3,9 @@
     <h2>{{ title }}</h2>
     <v-chip-group column>
       <baseIngredient
-        v-on:inactivate="onInactivate"
-        v-for="(ingredient, index) in groceries"
-        :key="ingredient + index"
-        :ingredient="{ ingredient: ingredient, id: index }"
+        v-for="ingredient in groceries"
+        :key="ingredient.id"
+        :ingredient="ingredient"
       />
     </v-chip-group>
   </div>
@@ -16,28 +15,26 @@
 import baseIngredient from "@/components/baseIngredient.vue";
 
 export default {
-  name: "PreviewGroceryList",
+  name: "ingredientList",
   components: {
     baseIngredient
   },
-  data() {
-    return {
-      inactivated: []
-    };
-  },
   props: {
     groceries: {
+      /*Array of Ingredient Items
+      {
+        ingredient: Str
+        id: int -> index in recipe list
+        active: bool
+        from: Str (recipe id)
+
+      }
+      */
       type: Array
     },
     title: {
       type: String,
       default: "Grocery List"
-    }
-  },
-  methods: {
-    onInactivate(clicked, ingredient) {
-      // need to grab the initial
-      this.$emit("onInactivate", clicked, ingredient);
     }
   }
 };

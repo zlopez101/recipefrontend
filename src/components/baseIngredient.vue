@@ -1,33 +1,26 @@
 <template>
   <v-chip @click="change" outlined :color="myColor">{{
-    myIngredient.ingredient
+    ingredient.ingredient
   }}</v-chip>
 </template>
 
 <script>
 export default {
   name: "baseIngredient",
-  data() {
-    return {
-      clicked: false,
-      myIngredient: this.ingredient
-    };
-  },
   props: {
     ingredient: {
+      // ingredient, active, from
       type: Object
     }
   },
   computed: {
     myColor() {
-      return this.clicked == false ? "green" : "red";
-      //   return "green";
+      return this.ingredient.active == true ? "green" : "red";
     }
   },
   methods: {
     change() {
-      this.clicked = !this.clicked;
-      this.$emit("inactivate", this.clicked, this.myIngredient);
+      this.$store.dispatch("toggleIngredient", this.ingredient);
     }
   }
 };
