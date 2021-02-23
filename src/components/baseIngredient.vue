@@ -20,7 +20,8 @@ export default {
   },
   methods: {
     change() {
-      this.$store.dispatch("toggleIngredient", this.ingredient);
+      this.$emit("clicked", this.ingredient);
+      // this.$store.dispatch("toggleIngredient", this.ingredient);
     }
   }
 };

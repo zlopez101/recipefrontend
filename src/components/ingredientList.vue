@@ -3,6 +3,7 @@
     <h2>{{ title }}</h2>
     <v-chip-group column>
       <baseIngredient
+        v-on:clicked="toggleActivation"
         v-for="ingredient in groceries"
         :key="ingredient.id"
         :ingredient="ingredient"
@@ -21,20 +22,16 @@ export default {
   },
   props: {
     groceries: {
-      /*Array of Ingredient Items
-      {
-        ingredient: Str
-        id: int -> index in recipe list
-        active: bool
-        from: Str (recipe id)
-
-      }
-      */
       type: Array
     },
     title: {
       type: String,
       default: "Grocery List"
+    }
+  },
+  methods: {
+    toggleActivation(ingredient) {
+      this.$emit("toggleActivation", ingredient);
     }
   }
 };

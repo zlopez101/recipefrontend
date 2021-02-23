@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-toolbar dense floating>
+    <v-toolbar floating>
       <v-text-field
         @keyup.enter="manuallyAddIngredient"
         label="New Grocery Item"
@@ -9,14 +9,13 @@
       ></v-text-field>
     </v-toolbar>
     <ingredientList
+      v-on:toggleActivation="toggleActivation"
       v-for="label in Object.keys(this.list)"
       :key="label"
       :title="label"
       :groceries="list[label]"
     />
-    <v-btn @click="makeFinalList" color="warning">Sort</v-btn>
-    <v-spacer></v-spacer>
-    <v-btn>Add an ingredient</v-btn>
+    <v-btn @click="sort" color="warning">Sort</v-btn>
   </div>
 </template>
 
@@ -34,19 +33,18 @@ export default {
       addingThisIngredient: {
         ingredient: "",
         active: true,
-        from: "UserCreated",
-        id: id++
-      },
-      myInactivations: []
+        from: "UserCreated"
+      }
     };
   },
   computed: mapState({
-    list: state => state.groceries.list
+    list: state => state.groceries.list,
+    token: state => state.user.token
   }),
   methods: {
-    makeFinalList() {
+    sort() {
       // dispatch the api call from the vuex store tbd
-      this.$store.dispatch("makeTheList", this.exportIngredients());
+      this.$store.dispatch("makeTheList");
     },
     exportIngredients() {
       return this.list.Groceries.filter(
@@ -54,17 +52,21 @@ export default {
       );
     },
     manuallyAddIngredient() {
+      this.addingThisIngredient.id = this.token.concat(id.toString());
       this.$store.dispatch("pushIngredients", [this.addingThisIngredient]);
       // need to reset the ingredient, otherwise the store contains a reference to it
       this.resetManualIngredient();
+      id++;
     },
     resetManualIngredient() {
       this.addingThisIngredient = {
         ingredient: "",
         active: true,
-        from: "UserCreated",
-        id: id++
+        from: "UserCreated"
       };
+    },
+    toggleActivation(ingredient) {
+      this.$store.dispatch("toggleActivation", ingredient);
     }
   }
 };

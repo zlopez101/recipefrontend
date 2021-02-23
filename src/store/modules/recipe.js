@@ -10,7 +10,7 @@ export const mutations = {
   SET_RECIPES(state, recipes) {
     state.recipes = recipes;
   },
-  TOGGLE_ACTIVATION(state, payload) {
+  RECIPE_INGREDIENT_TOGGLE(state, payload) {
     let recipe = state.recipes.find(recipe => recipe.id === payload.from);
     let ingredient = recipe.ingredients.find(
       ingredient => ingredient.id === payload.id
@@ -39,7 +39,7 @@ export const actions = {
     dispatch("fetchRecipes");
   },
   toggleIngredient({ commit }, ingredient) {
-    commit("TOGGLE_ACTIVATION", ingredient);
+    commit("RECIPE_INGREDIENT_TOGGLE", ingredient);
   },
   exportIngredientsToGroceryList({ dispatch, getters }, id) {
     // use the recipe id to get the recipe, and then send all the groceries

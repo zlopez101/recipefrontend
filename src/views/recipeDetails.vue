@@ -1,6 +1,10 @@
 <template>
   <div v-if="local">
-    <ingredientList :groceries="local.ingredients" :title="local.name" />
+    <ingredientList
+      :groceries="local.ingredients"
+      :title="local.name"
+      v-on:toggleActivation="toggleActivation"
+    />
     <v-btn @click="addToGrocery" outlined color="primary" dark
       >Add to Grocery List</v-btn
     >
@@ -39,6 +43,9 @@ export default {
   methods: {
     addToGrocery() {
       this.$store.dispatch("exportIngredientsToGroceryList", this.id);
+    },
+    toggleActivation(ingredient) {
+      this.$store.dispatch("toggleIngredient", ingredient);
     }
   }
 };
