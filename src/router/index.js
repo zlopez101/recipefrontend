@@ -1,11 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+// registration views
+import RegisterUser from "@/views/registration/Register.vue";
+import Layout from "@/views/registration/Layout.vue";
+import Failed from "@/views/registration/Failed.vue";
+import Success from "@/views/registration/Success.vue";
+import RecipeHome from "@/views/registration/Home.vue";
 // user views
 import Account from "@/views/Account.vue";
 import Settings from "@/views/Settings.vue";
-import RegisterUser from "@/views/RegisterUser.vue";
 import loginUser from "@/views/loginUser.vue";
-import RecipeHome from "@/views/RecipeHome.vue";
 // recipe views
 import RecipeList from "@/views/RecipeList.vue";
 import FinalGroceryList from "@/views/FinalGroceryList.vue";
@@ -17,13 +21,29 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: RecipeHome
-  },
-  {
-    path: "/register",
-    name: "register",
-    component: RegisterUser
+    component: Layout,
+    children: [
+      {
+        path: "",
+        component: RecipeHome,
+        name: "Home"
+      },
+      {
+        path: "register",
+        component: RegisterUser,
+        name: "register"
+      },
+      {
+        path: "success",
+        component: Success,
+        name: "success"
+      },
+      {
+        path: "failed",
+        component: Failed,
+        name: "failed"
+      }
+    ]
   },
   {
     path: "/login",

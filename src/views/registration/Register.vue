@@ -51,14 +51,27 @@
         </v-row>
       </v-container>
     </v-form>
+    <stripe-checkout
+      ref="checkoutRef"
+      :pk="pk"
+      :session-id="sessionId"
+      :customer-email="email"
+    />
   </div>
 </template>
 
 <script>
+import { StripeCheckout } from "@vue-stripe/vue-stripe";
+import { mapState } from "vuex";
 export default {
+  components: {
+    StripeCheckout
+  },
   name: "Registration",
   data() {
     return {
+      pk:
+        "pk_test_51I0Hi7AJqS6KUAStIg73brufDB8SmNTBqFvYFLyt7vAV1Ecbf7fPzDDIiwFflpnyD9tbYvaObpEpLhj9lBqROwZC00WywiUsQk",
       showPassword: false,
       showConfirmedPassword: false,
       name: "",
@@ -79,18 +92,28 @@ export default {
   methods: {
     onSubmit() {
       let names = this.name.split(" ");
-      let userData = {
-        fname: names[0],
-        lname: names[1],
-        phone_number: this.phone_number,
-        email: this.email,
-        password: this.password
+      let registerObject = {
+        user: {
+          fname: names[0],
+          lname: names[1],
+          phone_number: this.phone_number,
+          email: this.email,
+          password: this.password,
+          sessionId: this.sessionId
+        },
+        toStripe: this.$refs.checkoutRef.redirectToCheckout
       };
-      this.$store.dispatch("register", userData).then(() => {
-        this.$router.push({ name: "login" });
-      });
+      this.$store.dispatch("registerAndStripe", registerObject);
     }
-  }
+  },
+  computed: mapState({
+    sessionId: state => state.user.sessionId
+  })
+  // beforeCreate() {
+  //   RecipeService.sessionId().then(response => {
+  //     this.sessionId = response.data.sessionId;
+  //   });
+  // }
 };
 </script>
 

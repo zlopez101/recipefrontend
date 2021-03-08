@@ -1,7 +1,7 @@
 import RecipeService from "@/services/RecipeService.js";
-
 export const state = {
-  token: null
+  token: null,
+  sessionId: null
 };
 export const mutations = {
   SET_TOKEN(state, token) {
@@ -12,9 +12,19 @@ export const mutations = {
   REMOVE_TOKEN() {
     localStorage.removeItem("user");
     location.reload();
+  },
+  SET_SESSION_ID(state, sessionId) {
+    state.sessionId = sessionId;
   }
 };
 export const actions = {
+  registerAndStripe({ commit }, registerObject) {
+    RecipeService.register(registerObject.user).then(response => {
+      commit("SET_TOKEN", response.data.token);
+      commit("SET_SESSION_ID", response.data.sessionId);
+      registerObject.toStripe();
+    });
+  },
   register({ commit }, userData) {
     RecipeService.register(userData).then(response => {
       commit("SET_TOKEN", response.data);
