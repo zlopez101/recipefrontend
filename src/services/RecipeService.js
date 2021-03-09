@@ -1,8 +1,8 @@
 import axios from "axios";
 
 let apiClient = axios.create({
-  baseURL: "http://localhost:5000/api",
-  // baseURL: "https://stark-oasis-48982.herokuapp.com/api",
+  // baseURL: "http://localhost:5000/api",
+  baseURL: "https://stark-oasis-48982.herokuapp.com/api",
   withCredentials: false,
   headers: {
     Accept: "application/json",
@@ -29,6 +29,9 @@ export default {
   },
   login(credentials) {
     return apiClient.post("/login", credentials);
+  },
+  billing() {
+    return apiClient.get("/billing");
   },
   register(credentials) {
     return apiClient.post("/register", credentials);
