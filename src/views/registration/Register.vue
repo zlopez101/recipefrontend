@@ -4,12 +4,19 @@
       <v-container>
         <v-row>
           <v-col cols="12" md="4">
-            <v-text-field v-model="name" label="Name" required></v-text-field>
+            <v-text-field
+              v-model="name"
+              label="Name"
+              required
+              :rules="nameRules"
+            ></v-text-field>
           </v-col>
           <v-col cols="12" md="4">
             <v-text-field
               v-model="phone_number"
+              :rules="phone_numberRules"
               label="Phone Number"
+              @input="cleanInput"
               required
             ></v-text-field>
           </v-col>
@@ -63,6 +70,7 @@
 <script>
 import { StripeCheckout } from "@vue-stripe/vue-stripe";
 import { mapState } from "vuex";
+
 export default {
   components: {
     StripeCheckout
@@ -75,7 +83,17 @@ export default {
       showPassword: false,
       showConfirmedPassword: false,
       name: "",
+      nameRules: [
+        v => v.split(" ").length > 1 || "Please enter a first and last name",
+        v =>
+          v.split(" ").length < 3 ||
+          "Please separate hypenated names with a '-'"
+      ],
       phone_number: "",
+      phone_numberRules: [
+        v =>
+          /^\d{3}-\d{3}-\d{4}$/.test(v) || "Phone number must be 10 digits long"
+      ],
       email: "",
       emailRules: [
         v => !!v || "E-mail is required",
@@ -84,11 +102,12 @@ export default {
       password: "",
       confirmpassword: "",
       passwordRules: [],
-      confirmRules: [],
+      confirmRules: [v => v == this.password || "Confirm password must match"],
       phone: "",
       phoneRules: []
     };
   },
+
   methods: {
     onSubmit() {
       let names = this.name.split(" ");
@@ -104,11 +123,22 @@ export default {
         toStripe: this.$refs.checkoutRef.redirectToCheckout
       };
       this.$store.dispatch("registerAndStripe", registerObject);
+    },
+    cleanInput() {
+      if (this.phone_number.length == 3) {
+        this.phone_number = this.phone_number + "-";
+      } else if (this.phone_number.length == 7) {
+        this.phone_number = this.phone_number + "-";
+      } else {
+        // pass
+      }
     }
   },
-  computed: mapState({
-    sessionId: state => state.user.sessionId
-  })
+  computed: {
+    ...mapState({
+      sessionId: state => state.user.sessionId
+    })
+  }
   // beforeCreate() {
   //   RecipeService.sessionId().then(response => {
   //     this.sessionId = response.data.sessionId;

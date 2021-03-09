@@ -10,7 +10,14 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-text-field v-model="password" label="Password" required>
+            <v-text-field
+              v-model="password"
+              label="Password"
+              required
+              :type="showPassword ? 'text' : 'password'"
+              :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              @click:append="showPassword = !showPassword"
+            >
             </v-text-field>
           </v-col>
         </v-row>
@@ -30,7 +37,8 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      showPassword: false
     };
   },
   methods: {
