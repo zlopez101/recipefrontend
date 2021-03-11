@@ -29,14 +29,14 @@ export const actions = {
       });
   },
   makeRecipe({ dispatch }, url) {
-    RecipeService.makeRecipe(url)
+    return RecipeService.makeRecipe(url)
       .then(response => {
         console.log("recipe was created!", response);
+        dispatch("fetchRecipes");
       })
       .catch(error => {
         console.log("recipe was not added: ", error);
       });
-    dispatch("fetchRecipes");
   },
   toggleIngredient({ commit }, ingredient) {
     commit("RECIPE_INGREDIENT_TOGGLE", ingredient);

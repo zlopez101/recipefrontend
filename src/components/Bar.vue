@@ -65,21 +65,9 @@
       <v-card>
         <v-container>
           <v-row>
-            <v-col cols="6">
-              <v-text-field v-model="recipeName" label="Recipe Name">
-              </v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <span>Not Required, we can get the name from the URL</span>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="6">
+            <v-col>
               <v-text-field v-model="recipeUrl" label="URL for recipe">
               </v-text-field>
-            </v-col>
-            <v-col cols="6">
-              <span>Required</span>
             </v-col>
           </v-row>
           <v-btn @click="addRecipe" color="success">Add to Recipe Book</v-btn>
@@ -106,7 +94,6 @@ export default {
       drawer: false,
       group: null,
       dialog: false,
-      recipeName: "",
       recipeUrl: "",
       buttons: [
         {
@@ -120,7 +107,7 @@ export default {
           method: "search"
         },
         {
-          icon: "mdi-format-list-checkbox",
+          icon: "mdi-cart-variant",
           tooltiptext: "Grocery List",
           method: "grocery"
         },
@@ -139,7 +126,9 @@ export default {
   },
   methods: {
     addRecipe() {
-      this.$store.dispatch("makeRecipe", this.recipeUrl);
+      this.$store
+        .dispatch("makeRecipe", this.recipeUrl)
+        .then((this.dialog = false));
     },
     logout() {
       this.$store.dispatch("logout");
