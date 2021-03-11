@@ -53,10 +53,17 @@
                       configured to accept real payments.
                     </li>
                     <li>
-                      registering redirects to a stripe checkout. Enter one of
-                      their test credit cards:
+                      After registrations signup, you'll be redirected to a
+                      stripe checkout session. Enter one of their test credit
+                      cards:
                       <code>4242 4242 4242 4242</code> with any future
                       expiration, CCV, and zip.
+                    </li>
+                    <li>
+                      Since this is a test website, the backend is running on
+                      the free tier of the heroku platform. As a result, latency
+                      between API calls, especially when worker process is
+                      starting up, can run on the high side.
                     </li>
                   </ul>
                 </v-col>
@@ -98,9 +105,18 @@
                     <li>
                       So far the app only works recipe websites built with
                       wordpress. I recommend trying it with site like
-                      HalfBakedHarvest. Just grab one the recipe URL and paste.
-                      The recipe will appear in your recipe list along with
-                      ingredients.
+                      <a
+                        target="_blank"
+                        href="https://www.halfbakedharvest.com/"
+                        >HalfBakedHarvest</a
+                      >. Just grab one the recipe URL and paste. The recipe will
+                      appear in your recipe list along with ingredients.
+                    </li>
+                    <li>
+                      I used Half Baked Harvest as an example since its one that
+                      my fiancee likes a lot the website structure was easy to
+                      scrape. In future versions, all sorts of source would be
+                      supported.
                     </li>
                   </ul>
                 </v-col>
